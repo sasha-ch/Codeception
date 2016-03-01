@@ -614,7 +614,7 @@ class Configuration
 
             // yaml parameters
             if (preg_match('~\.yml$~', $paramStorage)) {
-                $params = Yaml::parse(file_get_contents(realpath(self::$dir . '/' . $paramStorage)));
+                $params = Yaml::parse(file_get_contents($paramsFile));
                 if (isset($params['parameters'])) { // Symfony style
                     $params = $params['parameters'];
                 }
@@ -628,6 +628,7 @@ class Configuration
                 static::$params = array_merge(self::$params, $params);
                 continue;
             }
+            throw new ConfigurationException("Params can't be loaded from `$paramStorage`.");
         }
     }
 }
